@@ -1,0 +1,83 @@
+Method 1:
+
+#include <bits/stdc++.h> 
+int operand(char ch){
+    return (ch>='a' && ch<='z' || ch>='A' && ch<='Z');
+}
+int oper(char ch){
+    return (ch=='+' || ch=='-' || ch=='*' || ch=='/');
+}
+bool duplicateParanthesis(string &expr)
+{
+    // Write your code here
+    stack<char>st;
+    int val;
+    for(int i=0;expr[i];i++){
+         if(expr[i] == ' ')
+        {
+            continue;
+        }
+        if(expr[i]=='(' || oper(expr[i]) || operand(expr[i])){
+            st.push(expr[i]);
+        }
+       
+        else if(expr[i]==')'){
+             val=0;
+            char top=st.top();
+            st.pop();
+            while(top!='('){
+                 val++;
+                top=st.top();
+                st.pop();
+               
+            }
+             if(val<1)
+            return true;
+            
+            
+        }
+    }
+       
+        return false;
+    
+}
+
+
+Method 2:
+
+#include <bits/stdc++.h> 
+
+bool duplicateParanthesis(string &expr)
+{
+    // Write your code here
+    stack<char>st;
+    int val;
+    for(int i=0;expr[i];i++){
+         if(expr[i] == ' ')
+        {
+            continue;
+        }
+        if(expr[i]!=')'){
+            st.push(expr[i]);
+        }
+       
+        else{
+             val=0;
+            
+            while(st.top()!='('){
+                 val++;
+                st.pop();
+               
+            }
+             st.pop();
+             
+             if(val<1)
+            return true;
+            
+            
+        }
+    }
+       
+        return false;
+    
+}

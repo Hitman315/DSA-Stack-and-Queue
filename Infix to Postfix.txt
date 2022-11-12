@@ -1,0 +1,60 @@
+  public:
+    // Function to convert an infix expression to a postfix expression.
+    int operand(char ch){
+        return (ch>='a' && ch<='z') || (ch>='A' && ch<='Z');
+    } 
+    int priority(char ch){
+        switch(ch){
+            case '+':
+            case '-':
+            return 1;
+            
+            case '*':
+            case '/':
+            return 2;
+            
+            case '^':
+            return 3;
+        }
+        return -1;
+    }
+    
+    string infixToPostfix(string s) {
+        // Your code here
+        
+        stack<int>st;
+        string output="";
+        int i;
+        for(i=0;s[i];){
+            if(s[i]=='('){
+                st.push(s[i]);
+                i++;
+            }
+            else if(operand(s[i])){
+                output+=s[i];
+                i++;
+            }
+            else if(s[i]==')'){
+                while(st.top()!='('){
+                    output+=st.top();
+                    st.pop();
+                }st.pop();
+                i++;
+            }else{
+                if(!st.empty() && priority(s[i])<=priority(st.top())){
+                    output+=st.top();
+                    st.pop();
+                }else{
+                st.push(s[i]);
+                i++;
+                }
+            }
+            
+        }
+        if(!st.empty()){
+            output+=st.top();
+            st.pop();
+        }
+        return output;
+    }
+};
